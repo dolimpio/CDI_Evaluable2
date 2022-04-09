@@ -11,10 +11,11 @@ public class Posibilidad1{
         Buffer buffer = new Buffer(tamBuffer);
 
         for(int i = 0; i < numHilos; i++){
-            productores.add(new Thread(new Writer(buffer)));
-            consumidores.add(new Thread(new Reader(buffer)));
+            productores.add(new Thread(new Writer(buffer), "Productor: "+i));
+            consumidores.add(new Thread(new Reader(buffer), "Consumidor: "+i));
         }
 
+        System.out.println("Se van a lanzar los hilos Productores y Consumidores.");
         for(int i = 0; i < numHilos; i++){
             productores.get(i).start();
             consumidores.get(i).start();
@@ -23,7 +24,11 @@ public class Posibilidad1{
         for(int i = 0; i < numHilos; i++){
             try{
             productores.get(i).join();
+            System.out.println("El hilo " + productores.get(i).getName() + " ha terminado completamente.");
+
             consumidores.get(i).join();
+            System.out.println("El hilo " + productores.get(i).getName() + " ha terminado completamente.");
+
             }catch(Exception e){}
         }
     }
