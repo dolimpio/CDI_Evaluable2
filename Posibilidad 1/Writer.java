@@ -1,26 +1,31 @@
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Writer implements Runnable {
+    int random = ThreadLocalRandom.current().nextInt(10000);
     Buffer buffer;
+    int idCorreo;
     public Writer(Buffer buffer){
         this.buffer = buffer;
+        idCorreo = 0; //Deberia hacer esta variable Atomic???
     }
+
+    @Override
     public void run(){
         System.out.println("Hilo : " + Thread.currentThread().getName() + " iniciandose.");
 
         write();
  
     }
-    
-    public synchronized void write(){
-        while(buffer.size() == buffer.limite){//Mejor usar funciones?
+    public void write(){
+        while(Posibilidad1.bandera){
             try {
-                System.out.println("Es buffer esta lleno. El hilo 'Writer' va a esperar que exista un espacio en el buffer");
-                wait();
-            } catch (Exception e) {
-                //TODO: handle exception
+                Thread.sleep(random);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            buffer.recibir(idCorreo);
+            idCorreo++;
         }
-            buffer.recibir();
-            notifyAll();
+
     }
 }

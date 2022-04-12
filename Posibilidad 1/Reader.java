@@ -1,30 +1,30 @@
-public class Reader implements Runnable{
+import java.util.concurrent.ThreadLocalRandom;
+
+public class Reader implements Runnable {
+    int random = ThreadLocalRandom.current().nextInt(10000);
     Buffer buffer;
-    public Reader(Buffer buffer){
+
+    public Reader(Buffer buffer) {
         this.buffer = buffer;
     }
-    public void run(){
+
+    @Override
+    public void run() {
         System.out.println("Hilo: " + Thread.currentThread().getName() + " iniciandose.");
-        try {
-            Thread.sleep(100000);
-        } catch (Exception e) {
-            //TODO: handle exception
-        }
+
         read();
     }
 
-    public synchronized void read(){//Se tienen que sincornizar con el buffer, checkear donde ajustar el synchronized
-        while(buffer.size() == 0){//Puede usar funciones mejor?
+    public void read() {// Se tienen que sincornizar con el buffer, checkear donde ajustar el
+                        // synchronized
+        while (Posibilidad1.bandera) {
             try {
-                System.out.println("Es buffer esta vacio. El hilo 'Reader' va a esperar que exista un correo disponible.");
-                wait();
-            } catch (Exception e) {
-                //TODO: handle exception
+                Thread.sleep(random);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            buffer.abrir();
         }
-        buffer.abrir();
-        notifyAll();
     }
 
 }
