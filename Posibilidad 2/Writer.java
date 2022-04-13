@@ -17,7 +17,7 @@ public class Writer implements Runnable {
  
     }
     public void write(){
-        while(Posibilidad1.bandera){
+        while(Posibilidad2.bandera){
             try {
                 Thread.sleep(random);
             } catch (InterruptedException e) {

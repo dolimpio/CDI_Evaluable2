@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Posibilidad1{
+public class Posibilidad2{
 
     static boolean bandera = true;
     public static void main(String[] args) {

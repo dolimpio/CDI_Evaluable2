@@ -11,7 +11,7 @@ public class Buffer {
         this.limite = limite;
     }
 
-    public synchronized void recibir(int idCorreo) {
+    public  void recibir(int idCorreo) {
         while (buffer.size() == limite) {// Si el buffer esta lleno, hay que esperar.
             try {
                 System.out.println(
@@ -28,7 +28,7 @@ public class Buffer {
         notifyAll();
     }
 
-    public synchronized void abrir() {
+    public  void abrir() {
         while (buffer.size() == 0) {// Puede usar funciones mejor?
             try {
                 System.out.println(

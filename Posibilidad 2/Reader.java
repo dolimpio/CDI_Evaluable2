@@ -17,7 +17,7 @@ public class Reader implements Runnable {
 
     public void read() {// Se tienen que sincornizar con el buffer, checkear donde ajustar el
                         // synchronized
-        while (Posibilidad1.bandera) {
+        while (Posibilidad2.bandera) {
             try {
                 Thread.sleep(random);
             } catch (InterruptedException e) {
