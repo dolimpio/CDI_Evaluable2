@@ -1,12 +1,13 @@
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Writer implements Runnable {
     int random = ThreadLocalRandom.current().nextInt(10000);
-    Buffer buffer;
+    private BlockingQueue buffer;
     AtomicInteger idCorreo ; //Por que no se protege esta sección si es un aotmic integer??
     
-    public Writer(Buffer buffer){
+    public Writer(BlockingQueue buffer){
         this.buffer = buffer;
         idCorreo = new AtomicInteger(0); //Deberia hacer esta variable Atomic???
     }
@@ -19,16 +20,15 @@ public class Writer implements Runnable {
  
     }
     public void write(){
-        while(Posibilidad2.bandera){
+        while(Posibilidad3.bandera){
             try {
                 Thread.sleep(random);
+                buffer.put(idCorreo.get());
+                System.out.println("Se ha enviado el correo: " + idCorreo );
+                idCorreo.getAndIncrement();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            //int correo = idCorreo.get();
-            buffer.recibir(idCorreo.get());
-            idCorreo.getAndIncrement();
         }
-
     }
 }
