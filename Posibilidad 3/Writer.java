@@ -19,12 +19,12 @@ public class Writer implements Runnable {
         write();
  
     }
-    public void write(){
+    public synchronized void write(){
         while(Posibilidad3.bandera){
             try {
                 Thread.sleep(random);
                 buffer.put(idCorreo.get());
-                System.out.println("Se ha enviado el correo: " + idCorreo );
+                System.out.println("El 'Writer' " + Thread.currentThread().getName() + " ha enviado el correo: " + idCorreo + ".");
                 idCorreo.getAndIncrement();
             } catch (InterruptedException e) {
                 e.printStackTrace();

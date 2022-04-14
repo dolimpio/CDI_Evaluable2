@@ -67,7 +67,7 @@ public class Posibilidad3{
         for(int i = 0; i < numProductores; i++){
             try{
                 productores.get(i).join();
-                System.out.println("El hilo " + productores.get(i).getName() + " ha terminado completamente.");
+                System.out.println("El hilo " + productores.get(i).getName() + " ha parado completamente.");
     
                 }catch(Exception e){
                     e.printStackTrace();
@@ -77,7 +77,7 @@ public class Posibilidad3{
         for(int i = 0; i < numConsumidores; i++){
             try{
                 consumidores.get(i).join();
-                System.out.println("El hilo " + consumidores.get(i).getName() + " ha terminado completamente.");
+                System.out.println("El hilo " + consumidores.get(i).getName() + " ha parado completamente.");
     
                 }catch(Exception e){
                     e.printStackTrace();

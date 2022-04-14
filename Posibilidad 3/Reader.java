@@ -17,14 +17,21 @@ public class Reader implements Runnable {
     }
 
     public void read() {
+        int correo;
         while (Posibilidad3.bandera) {
             try {
                 Thread.sleep(random);
-
-                int correo = (int)buffer.peek();
+                
+                //tengo que hacer esta comprobación para leer
+                if( !buffer.isEmpty()){
+                     correo = (int)buffer.peek();
+                }else{
+                    correo = -1; //Nunca va a tomar el valor '-1'. 
+                                 //La accion buffer.take() solo se realizara si hay elementos en el buffer
+                }  
+            
                 buffer.take();
-                System.out.println("Se ha leido el correo: " + correo);
-            } catch (InterruptedException e) {
+                System.out.println("El 'Reader' " + Thread.currentThread().getName() + " ha leido el correo: " + correo + ".");             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
