@@ -1,11 +1,13 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Posibilidad1 {
 
     static boolean bandera = true;
 
     public static void main(String[] args) {
+
+        //Definimos aqui, cuanto queremos que dure la ejecución del programa.
+        long duracionPrograma = 10000;
 
         // Parametrizamos los argumentos introducidos
 
@@ -51,9 +53,9 @@ public class Posibilidad1 {
                 consumidores.get(i).start();
             }
 
-            //Mediante la variable 'bandera' decidimos cuanto va a durar la ejecución de nuestro programa.
+            //Mediante la variable 'bandera' avisamos a los hilos que se acaba la ejecución del programa.
             try {
-                Thread.sleep(10000);
+                Thread.sleep(duracionPrograma);
                 bandera = false;
 
             } catch (InterruptedException e) {
@@ -66,7 +68,7 @@ public class Posibilidad1 {
                     productores.get(i).join();
                     System.out.println("El hilo " + productores.get(i).getName() + " ha parado completamente.");
 
-                } catch (Exception e) {
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -75,7 +77,7 @@ public class Posibilidad1 {
                 try {
                     consumidores.get(i).join();
                     System.out.println("El hilo " + consumidores.get(i).getName() + " ha parado completamente.");
-                } catch (Exception e) {
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }

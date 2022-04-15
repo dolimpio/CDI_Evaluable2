@@ -9,6 +9,7 @@ public class Reader implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("Hilo: " + Thread.currentThread().getName() + " iniciandose.");
         read();
     }
 
