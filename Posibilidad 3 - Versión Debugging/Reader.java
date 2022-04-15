@@ -10,6 +10,7 @@ public class Reader implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("Hilo: " + Thread.currentThread().getName() + " iniciandose.");
         read();
     }
 
@@ -27,6 +28,9 @@ public class Reader implements Runnable {
                                // caso contrario el hilo esperara hasta que exista un elemento que pueda ser
                                // leido.
 
+                System.out.println(
+                        "El 'Reader' " + Thread.currentThread().getName()
+                                + " ha leido el primer correo de la bandeja de entrada.");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

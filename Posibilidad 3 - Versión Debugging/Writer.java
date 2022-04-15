@@ -12,7 +12,10 @@ public class Writer implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("Hilo : " + Thread.currentThread().getName() + " iniciandose.");
+
         write();
+
     }
 
     // Metodo encargado de enviar correos.
@@ -31,6 +34,8 @@ public class Writer implements Runnable {
                                       // realizara si hay espacio en el buffer, en
                                       // caso contrario el hilo esperara hasta que exista un elemento que pueda ser
                                       // recibido.
+                System.out.println(
+                        "El 'Writer' " + Thread.currentThread().getName() + " ha enviado el correo: " + idCorreo + ".");
                 idCorreo++;
             } catch (InterruptedException e) {
                 e.printStackTrace();
