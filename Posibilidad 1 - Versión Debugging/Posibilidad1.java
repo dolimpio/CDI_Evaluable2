@@ -22,6 +22,11 @@ public class Posibilidad1 {
             System.exit(1);
         } else {
 
+            // Imprimimos en pantalla los parametros introducidos.
+            System.out.println("Inicializando el programa...");
+            System.out.println("Nº Productores: " + numProductores +
+                    "\nNº Consumidores: " + numConsumidores + "\nTamaño del Buffer: " + tamBuffer);
+
             //Inicializamos los Arrays de hilos, tanto productores como consumidores y el buffer.
             ArrayList<Thread> productores = new ArrayList<>();
             ArrayList<Thread> consumidores = new ArrayList<>();
@@ -37,6 +42,7 @@ public class Posibilidad1 {
             }
 
             //Inicializamos los hilos. Como el buffer va a estar vacio, iniciamos primero a los Productores.
+            System.out.println("Se van a lanzar los hilos Productores y Consumidores.");
             for (int i = 0; i < numProductores; i++) {
                 productores.get(i).start();
             }
@@ -58,6 +64,8 @@ public class Posibilidad1 {
             for (int i = 0; i < numProductores; i++) {
                 try {
                     productores.get(i).join();
+                    System.out.println("El hilo " + productores.get(i).getName() + " ha parado completamente.");
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -66,6 +74,7 @@ public class Posibilidad1 {
             for (int i = 0; i < numConsumidores; i++) {
                 try {
                     consumidores.get(i).join();
+                    System.out.println("El hilo " + consumidores.get(i).getName() + " ha parado completamente.");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

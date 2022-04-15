@@ -11,7 +11,9 @@ public class Writer implements Runnable {
 
     @Override
     public void run(){
+        System.out.println("Hilo : " + Thread.currentThread().getName() + " iniciandose.");
         write();
+ 
     }
 
     //Metodo encargado de enviar correos.
