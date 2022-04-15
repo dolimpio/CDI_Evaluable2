@@ -1,7 +1,6 @@
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Reader implements Runnable {
-    int random = ThreadLocalRandom.current().nextInt(10000);
     Buffer buffer;
 
     public Reader(Buffer buffer) {
@@ -11,12 +10,14 @@ public class Reader implements Runnable {
     @Override
     public void run() {
         System.out.println("Hilo: " + Thread.currentThread().getName() + " iniciandose.");
-
         read();
     }
 
-    public void read() {// Se tienen que sincornizar con el buffer, checkear donde ajustar el
-                        // synchronized
+    //Metodo encargado de leer correos.
+    public void read() {
+        int random = ThreadLocalRandom.current().nextInt(100);
+
+        //Una variable en la clase Posibilidad1, controla hasta cuando se ejecuta el programa.
         while (Posibilidad1.bandera) {
             try {
                 Thread.sleep(random);
