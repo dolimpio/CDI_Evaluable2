@@ -11,7 +11,7 @@ public class Buffer {
         this.limite = limite;
     }
 
-    public  void recibir(int idCorreo) {
+    public synchronized void recibir(int idCorreo) {
         while (buffer.size() == limite) {// Si el buffer esta lleno, hay que esperar.
             try {
                 System.out.println(
@@ -28,28 +28,18 @@ public class Buffer {
         notifyAll();
     }
 
-    public  void abrir() {
-        while (buffer.size() == 0) {// Puede usar funciones mejor?
+    public synchronized void abrir() {
+        while (buffer.size() == 0) {
             try {
                 System.out.println(
                         "Es buffer esta vacio. El hilo 'Reader' va a esperar que exista un correo disponible.");
                 wait();
             } catch (InterruptedException e) {
-                // TODO: handle exception
                 e.printStackTrace();
             }
         }
         System.out.println("Se ha leido el correo: " + buffer.get(0));
         buffer.remove(0);
         notifyAll();
-    }
-
-    // Eliminar funciones
-    public boolean isEmpty() {
-        return buffer.isEmpty();
-    }
-
-    public boolean notFull() {
-        return buffer.size() != limite;
     }
 }

@@ -6,22 +6,22 @@ public class Posibilidad1{
     static boolean bandera = true;
     public static void main(String[] args) {
 
-        //Se solicitan los parametros por consola
+        //Parametrizamos los argumentos introducidos
 
-        Scanner sc = new Scanner(System.in);   
+        int numProductores = Integer.parseInt(args[0]);
 
-        System.out.println("Introduce el numero de 'Writers' (Productores): ");
-        int numProductores = Character. getNumericValue(sc.next().charAt(0));
+        int numConsumidores = Integer.parseInt(args[1]);
 
-        System.out.println("Introduce el numero de 'Readers' (Consumidores): ");
-        int numConsumidores = Character. getNumericValue(sc.next().charAt(0));
+        int tamBuffer = Integer.parseInt(args[2]);
 
-        System.out.println("Introduce el tamaño del 'Buffer': ");
-        int tamBuffer = Character. getNumericValue(sc.next().charAt(0));
-
-        //Se confirma el resultado por consola
-        System.out.println("Nº Productores: " + numProductores +
-        "\nNº Consumidores: " + numConsumidores + "\nTamaño del Buffer: " + tamBuffer);
+        //Si los parametros son correctos, se sigue con la ejecucción, si no, salimos del programa.
+        if (!comprobarParametros(numProductores, numConsumidores, tamBuffer)) {
+            System.out.println("Saliendo del programa...");
+            System.exit(1);
+        } else {
+            System.out.println("Inicializando el programa...");
+            System.out.println("Nº Productores: " + numProductores +
+                    "\nNº Consumidores: " + numConsumidores + "\nTamaño del Buffer: " + tamBuffer);
 
 
         ArrayList<Thread> productores = new ArrayList<>();
@@ -69,7 +69,7 @@ public class Posibilidad1{
         for(int i = 0; i < numProductores; i++){
             try{
                 productores.get(i).join();
-                System.out.println("El hilo " + productores.get(i).getName() + " ha terminado completamente.");
+                    System.out.println("El hilo " + productores.get(i).getName() + " ha parado completamente.");
     
                 }catch(Exception e){
                     e.printStackTrace();
@@ -79,12 +79,23 @@ public class Posibilidad1{
         for(int i = 0; i < numConsumidores; i++){
             try{
                 consumidores.get(i).join();
-                System.out.println("El hilo " + consumidores.get(i).getName() + " ha terminado completamente.");
-    
+                    System.out.println("El hilo " + consumidores.get(i).getName() + " ha parado completamente.");    
                 }catch(Exception e){
                     e.printStackTrace();
                 }              
+        }
         }                      
 
+    }
+        static boolean comprobarParametros(int a, int b, int c) {
+        if (a < 0 || b < 0 || c < 0) {
+            System.out.println("Los parametros tienen que ser numeros positivos.");
+            return false;
+        } else if (a == 0 || b == 0 || c == 0) {
+            System.out.println("Los parametros tienen que ser mayor que 0.");
+            return false;
+        }
+
+        return true;
     }
 }
