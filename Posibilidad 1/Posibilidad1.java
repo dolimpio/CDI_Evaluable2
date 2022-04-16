@@ -90,23 +90,32 @@ public class Posibilidad1 {
             long tiempoInicialMin;
             long tiempoFinalMax;
 
+            //Obtenemos el menor tiempo de ejecucion inicial de los Hilos Productores.
             long minProducerTime = Collections.min(Writer.ArrayInicio);
+
+            //Obtenemos el mayor tiempo de ejecucion final de los Hilos Productores.
             long maxProducerTime = Collections.max(Writer.ArrayFin);
 
+            //Obtenemos el menor tiempo de ejecucion inicial de los Hilos Consumidores.
             long minConsumerTime = Collections.min(Reader.ArrayInicio);
+
+            //Obtenemos el mayor tiempo de ejecucion final de los Hilos Consumidores.
             long maxConsumerTime = Collections.max(Reader.ArrayFin);
 
-            //Obtenemos el menor tiempo inicial de ejecucción entre Consumidores y Productores
+            //Obtenemos el menor tiempo inicial de ejecucion entre Consumidores y Productores.
             if( minProducerTime < minConsumerTime) tiempoInicialMin = minProducerTime;
             else tiempoInicialMin = minConsumerTime;
 
-            //Obtenemos el mayor tiempo final de ejecucción entre Consumidores y Productores
+            //Obtenemos el mayor tiempo final de ejecucion entre Consumidores y Productores.
             if( maxConsumerTime < maxProducerTime) tiempoFinalMax = maxProducerTime;
             else tiempoFinalMax = maxConsumerTime;
 
+
+            //Calculamos el tiempo de ejecucion y el numero total de hilos.
             long elapsed = (tiempoFinalMax - tiempoInicialMin)/1000000;
             int numHilos = numConsumidores + numProductores;
 
+            //Imprimimos el valor anterior por pantalla
             System.out.println(numHilos + " " + elapsed);
 
         }

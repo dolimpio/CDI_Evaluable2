@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Reader implements Runnable {
+    //Se declaran de manera estatica (Para poder acceder a ellos desde 'Posibilidad1') los arrays que guardaran el tiempo de ejecucion de los hilos
     static ArrayList<Long> ArrayInicio = new ArrayList();
     static ArrayList<Long> ArrayFin = new ArrayList();
     
@@ -15,9 +16,9 @@ public class Reader implements Runnable {
     public void run() {
         long tiempoInicio = System.nanoTime();
         read();
-        // Guardamos tiempos (Cada posición corresponde a un hilo diferente).
         long tiempoFin = System.nanoTime();
         int id = Integer.parseInt(Thread.currentThread().getName());
+        // Guardamos tiempos (Cada posición corresponde a un hilo diferente).
         ArrayInicio.set(id, tiempoInicio);
         ArrayFin.set(id, tiempoFin);
     }
