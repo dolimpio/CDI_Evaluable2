@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -33,11 +34,22 @@ public class Posibilidad3 {
 
             //Introducimos los hilos en su correspondiente array.
             for (int i = 0; i < numProductores; i++) {
-                productores.add(new Thread(new Writer(buffer), "Productor: " + i));
+                productores.add(new Thread(new Writer(buffer), "" + i));
             }
 
             for (int i = 0; i < numConsumidores; i++) {
-                consumidores.add(new Thread(new Reader(buffer), "Consumidor: " + i));
+                consumidores.add(new Thread(new Reader(buffer), "" + i));
+            }
+
+            // Estos bucles rellenan los Array estaticos de ceros, de esta forma podemos usar
+            // luego el metodo "set" en los hilos.
+            for (int n = 0; n < numConsumidores; n++) {
+                Reader.ArrayInicio.add((long) 0);
+                Reader.ArrayFin.add((long) 0);
+            }
+            for (int n = 0; n < numProductores; n++) {
+                Writer.ArrayInicio.add((long) 0);
+                Writer.ArrayFin.add((long) 0);
             }
 
             //Inicializamos los hilos. Como el buffer va a estar vacio, iniciamos primero a los Productores.
@@ -76,6 +88,37 @@ public class Posibilidad3 {
                     e.printStackTrace();
                 }
             }
+
+            long tiempoInicialMin;
+            long tiempoFinalMax;
+
+            //Obtenemos el menor tiempo de ejecucion inicial de los Hilos Productores.
+            long minProducerTime = Collections.min(Writer.ArrayInicio);
+
+            //Obtenemos el mayor tiempo de ejecucion final de los Hilos Productores.
+            long maxProducerTime = Collections.max(Writer.ArrayFin);
+
+            //Obtenemos el menor tiempo de ejecucion inicial de los Hilos Consumidores.
+            long minConsumerTime = Collections.min(Reader.ArrayInicio);
+
+            //Obtenemos el mayor tiempo de ejecucion final de los Hilos Consumidores.
+            long maxConsumerTime = Collections.max(Reader.ArrayFin);
+
+            //Obtenemos el menor tiempo inicial de ejecucion entre Consumidores y Productores.
+            if( minProducerTime < minConsumerTime) tiempoInicialMin = minProducerTime;
+            else tiempoInicialMin = minConsumerTime;
+
+            //Obtenemos el mayor tiempo final de ejecucion entre Consumidores y Productores.
+            if( maxConsumerTime < maxProducerTime) tiempoFinalMax = maxProducerTime;
+            else tiempoFinalMax = maxConsumerTime;
+
+
+            //Calculamos el tiempo de ejecucion y el numero total de hilos.
+            long elapsed = (tiempoFinalMax - tiempoInicialMin)/1000000;
+            int numHilos = numConsumidores + numProductores;
+
+            //Imprimimos el valor anterior por pantalla.
+            System.out.println(numHilos + " " + elapsed);
 
         }
     }
