@@ -1,12 +1,13 @@
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Writer implements Runnable {
     Buffer buffer;
-    int idCorreo ; 
+    AtomicInteger idCorreo ; 
 
     public Writer(Buffer buffer){
         this.buffer = buffer;
-        idCorreo = 0;
+        idCorreo = new AtomicInteger(0); //Hacemos uso de AtomicInteger para que cada hilo, envie su correo de una manera mas segura.
     }
 
     @Override
@@ -29,8 +30,7 @@ public class Writer implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            buffer.recibir(idCorreo);
-            idCorreo++;
+            buffer.recibir(idCorreo.getAndIncrement());
         }
 
     }

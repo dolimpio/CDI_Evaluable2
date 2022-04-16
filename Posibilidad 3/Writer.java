@@ -1,13 +1,14 @@
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Writer implements Runnable {
     private BlockingQueue buffer;
-    int idCorreo;
+    AtomicInteger idCorreo;
 
     public Writer(BlockingQueue buffer) {
         this.buffer = buffer;
-        idCorreo = 0;
+        idCorreo = new AtomicInteger(0); //Hacemos uso de AtomicInteger para que cada hilo, envie su correo de una manera mas segura.
     }
 
     @Override
@@ -27,11 +28,11 @@ public class Writer implements Runnable {
         while (Posibilidad3.bandera) {
             try {
                 Thread.sleep(random);
-                buffer.put(idCorreo); // La accion buffer.put() (introducir un elemento en el buffer) solo se
+                buffer.put(idCorreo.getAndIncrement()); // La accion buffer.put() (introducir un elemento en el buffer) solo se
                                       // realizara si hay espacio en el buffer, en
                                       // caso contrario el hilo esperara hasta que exista un elemento que pueda ser
                                       // recibido.
-                idCorreo++;
+                
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
